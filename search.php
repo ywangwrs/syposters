@@ -115,9 +115,9 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
              $Type=$_POST["Type"];
              $City=$_POST["City"];
              $dbname=$_POST["dbname"];
+             $gt_time=$_POST["gt_time"];
+             $lt_time=$_POST["lt_time"];
         }
-        $gt_time=$_POST["gt_time"];
-        $lt_time=$_POST["lt_time"];
         //echo "Type=$Type dbname=$dbname";
 
         // select a collection (analogous to a relational database's table)

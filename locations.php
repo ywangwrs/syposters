@@ -364,13 +364,8 @@ echo "<h2>Current user is: $username</h2>";
 ?>
 
 <HR />
-<form action="search.php" method="get">
-<input type="hidden" name="dbname" value="syposters"/>
-<input type="submit" value="SY Postesrs">
-</form>
-<form action="search.php" method="get">
-<input type="hidden" name="dbname" value="locdata"/>
-<input type="submit" value="Ottawa Locations">
+<form action="search.php">
+     <input type="submit" value="Search Database">
 </form>
 
 Version:<?php echo "$version"; ?>  &nbsp; &nbsp;  <small>by ywang</small><BR>
