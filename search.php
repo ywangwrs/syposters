@@ -53,7 +53,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         echo "<option value=\"syposters\">Posters</option>";
         echo "<option value=\"locdata\">Locations</option>";
         echo "</select>";
-        // close table cell
         echo "</td><td>";
 
         echo "Type:";
@@ -71,7 +70,30 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         echo "<option value=\"Lawyer_office\">Lawyer_office</option>";
         echo "<option value=\"Other\">Other</option>";
         echo "</select>";
-        // close table cell
+        echo "</td><td>";
+
+        echo "City:";
+        echo "<select name=\"City\">";
+        echo "<option value=\"All\">All</option>";
+        echo "<option value=\"Ottawa\">Ottawa</option>";
+        echo "<option value=\"Gatineau\">Gatineau</option>";
+        echo "<option value=\"Kanata\">Kanata</option>";
+        echo "<option value=\"Orleans\">Orleans</option>";
+        echo "<option value=\"Nepean\">Nepean</option>";
+        echo "<option value=\"Gloucester\">Gloucester</option>";
+        echo "<option value=\"Osgoode\">Osgoode</option>";
+        echo "<option value=\"Barrhaven\">Barrhaven</option>";
+        echo "<option value=\"Other\">Other</option>";
+        echo "</select>";
+        echo "</td><td>";
+
+        $gt_time = date("Y/m/d", strtotime("monday last week"));
+        $lt_time = date("Y/m/d", strtotime("monday next week"));
+        echo "Between:";
+        echo "</td><td >";
+        echo "<input name=\"gt_time\" type=\"text\" value=$gt_time /></br>";
+        echo "</td><td>";
+        echo "<input name=\"lt_time\" type=\"text\" value=$lt_time /></br>";
         echo "</td><td>";
 
         echo "<input type=\"submit\" value=\"Search\">";
@@ -86,28 +108,41 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
 
         if (empty($_POST)) {
              $Type = "All";
+             $City = "All";
              $dbname = "syposters";
         }
         else {
              $Type=$_POST["Type"];
+             $City=$_POST["City"];
              $dbname=$_POST["dbname"];
         }
-        echo "Type=$Type dbname=$dbname";
+        $gt_time=$_POST["gt_time"];
+        $lt_time=$_POST["lt_time"];
+        //echo "Type=$Type dbname=$dbname";
 
         // select a collection (analogous to a relational database's table)
         $collection = $db->$dbname;
 
-        if ( $Type == "All" ) {
-            $type_array = array( 'Type' => array( '$ne' => null) );
+        if ( $Type == "All" && $City == "All" ) {
+            $search_array = array ( 
+                'Type' => array( '$ne' => null), 
+                'City' => array( '$ne' => null), 
+                'CreateTime' => array ( '$gt' => "$gt_time" ));
+        }
+        else if( $Type == "All" && $City != "All" ) {
+            $search_array = array ( 'Type' => array( '$ne' => null), 'City' => "$City" );
+        }
+        else if( $Type != "All" && $City == "All" ) {
+            $search_array = array ( 'Type' => "$Type", 'City' => array( '$ne' => null) );
         }
         else {
-            $type_array = array( "Type" => "$Type" );
+            $search_array = array ( 'Type' => "$Type", 'City' => "$City" );
         }
 
     echo "<table>";
 
     // building table head with keys
-    $cursor = $collection->find( $type_array );
+    $cursor = $collection->find( $search_array );
     $array = iterator_to_array($cursor);
     $keys = array();
     foreach ($array as $k => $v) {
@@ -129,7 +164,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         }
     }
 
-    $cursor = $collection->find( $type_array );
+    $cursor = $collection->find( $search_array );
     $cursor_count = $cursor->count();
     foreach ($cursor as $venue) {
         echo "<tr>";
