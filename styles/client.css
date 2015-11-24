@@ -1,0 +1,284 @@
+/*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*//*LOGIN SCREEN*/
+
+/*Login Background color*/
+body { 
+	color: #333;
+	background: #CCCCCC;
+}
+
+/*Login area border and background*/
+#LoginArea {
+	color: #818181;
+    background-color: #000000;
+    border-color: #000000 !important;
+}
+
+/*Login link color*/
+#LoginArea a {
+	color: #FFFFFF;
+}
+
+#LoginContainer a {
+	color: #FFFFFF;	
+}
+
+/*Login button*/
+.LightButton {
+	color: #FFFFFF;
+	background: #CC0000;
+}
+
+/*HEADER BAR - MAIN NAVIGATION*//*HEADER BAR - MAIN NAVIGATION*//*HEADER BAR - MAIN NAVIGATION*//*HEADER BAR - MAIN NAVIGATION*//*HEADER BAR - MAIN NAVIGATION*/
+
+/*Navigation Background Colors ALL the same*/
+#Navigation .Background {
+    background: #000000;
+}
+
+/*Navigation Background Colors ALL the same*/
+#topBar, .topbar
+{
+    background:         #000000;
+}
+
+/*Navigation Tab Color*/
+#Navigation .Item {
+	color: #FFF;
+	background: #333333; 
+	border-color: #999999 !important;
+}
+
+/*Navigation Tab Hover Color*/
+#Navigation .Item:hover {
+	color: #CCC;
+	background: #999999;
+}
+
+/*Navigation showall button color*/
+#Navigation #ShowAllButton {
+	color: #FFF;
+	background: #333333; 
+	border-color: #999999 !important;
+}
+
+/*Navigation userbutton color*/
+#Navigation #UserButton {
+	background: #FFCC33; 
+}
+
+/*Quick search background color and text*/
+#Navigation #SearchArea input {
+	background-color: #333333;	
+	color: #AAAAAA; /*Text Color*/
+}
+
+/*Text color of active tab*/
+.ActiveLink {
+	color: #FFCB2F;	
+}
+
+/*User alert bubble and text color*/
+#AlertCount #Count {
+	background-color: #333333;
+	color: #FFFFFF;
+}
+
+/*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*//*SUBMENU*/
+
+/*Dropdown navigation bar background*/
+#EditPageArea {
+    background-color: #333333;
+}
+
+/*Navigation bar dropdown text colors*/
+#ApplicationNavigation {
+	color: #FFFFFF;
+}
+
+#ApplicationNavigation .SubMenuItem {
+	color: #FFFFFF; 
+}
+
+/*Submenu dropdown background colors*/
+#ApplicationNavigation .SubMenu {
+	background-color: #333333;
+	border-color: #333333;
+}
+
+/*Submenu rollover colors*/
+#ApplicationNavigation .SubMenuItem:hover, 
+#ApplicationNavigation .SubMenuBlock:hover{
+	color: #FFF;
+	background-color: #999999;
+}
+
+
+/*USER MENU/HELP MENU DROPDOWN*//*USER MENU/HELP MENU DROPDOWN*//*USER MENU/HELP MENU DROPDOWN*//*USER MENU/HELP MENU DROPDOWN*//*USER MENU/HELP MENU DROPDOWN*/
+
+/*Userbutton dropdown text color*/
+#PopUpHelp, 
+#PopUpPodHelp, 
+#PopUpUserInfo, 
+#PopUpSubMore,  {
+	color: #FFF;
+}
+
+/*Userbutton dropdown arrow color*/
+#PopUpHelp .BoxArrow, 
+#PopUpPodHelp .BoxArrow, 
+#PopUpUserInfo .BoxArrow, 
+#PopUpSubMore .BoxArrow {
+	border-color: transparent transparent #333333 transparent;
+	_border-color: #000000 #000000 #333333 #000000;	
+}
+
+/*Userbutton dropdown background color*/
+#PopUpHelp .LinkList, 
+#PopUpPodHelp .LinkList, 
+#PopUpUserInfo .LinkList, 
+#PopUpSubMore .SideMenu{
+	background-color: #333333;
+}
+
+/*Userbutton dropdown line color*/
+#PopUpHelp .LinkList .Items, 
+#PopUpPodHelp .LinkList .Items, 
+#PopUpUserInfo .LinkList .Items, 
+#PopUpSubMore .LinkList .Items, 
+#PopUpSubMore .SideMenuItem {
+	border-bottom-color:#999999;
+}
+
+/*Userbutton dropdown rollover color*/
+#PopUpHelp .LinkList .Items:hover, 
+#PopUpPodHelp .LinkList .Items:hover, 
+#PopUpUserInfo .LinkList .Items:hover, 
+#PopUpSubMore .LinkList .Items:hover, 
+#PopUpSubMore .SideMenuItem:hover {
+	background-color: #999999;
+}
+
+/*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*//*QUICK LINKS MENU*/
+
+/*Quick links tile color*/
+#Navigation #PopUpNavigation .Title {
+	color: #FFCC33;
+}
+
+/*Quicklinks arrow color*/
+#Navigation #PopUpNavigation .BoxArrow {
+	border-color: transparent transparent #333333 transparent;
+	_border-color: #000000 #000000 #333333 #000000;
+}
+
+/*Quicklinks background color*/
+#Navigation #PopUpNavigation .LinkList {
+	background-color: #333333;
+}
+
+/*Quicklinks hidden module color*/
+#Navigation #SortHiddenSubList .Item {
+	color: #000;
+	background: #999999;
+}
+
+/*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*//*FOOTER*/
+
+/*Footer colors*/
+#Footer {
+	background-color: #000000;
+}
+
+
+#Footer #Copyright {
+	color: #000000;
+}
+
+
+
+
+
+
+
+
+
+/*ADDITIONAL CHANGES - COMMENT IF NOT NEEDED*//*ADDITIONAL CHANGES - COMMENT IF NOT NEEDED*//*ADDITIONAL CHANGES - COMMENT IF NOT NEEDED*//*ADDITIONAL CHANGES - COMMENT IF NOT NEEDED*/
+
+/*Asset Dashboard Header color 
+#header
+{
+    background:         #333333;
+    border-top:         #999999;
+    border-bottom:      #D3D3D3;
+}
+*/
+
+/* Header breadcrumb trail */
+DIV.breadcrumbTrail, DIV.breadcrumbTrail a {
+     color: #333333;
+}
+
+
+/*Asset dashboard module header color 
+.moduleHeader
+{
+    background:         #333333;
+}
+*/
+
+
+/*Subarrow on dropdown navigation */
+.SubArrow {
+    color: #FFFFFF;
+}
+
+
+/*Header title color
+.hdrtitle
+{
+    color:              #FFF;
+}
+*/
+
+/*remote session title color 
+.hdrdetail
+{
+    color:              #ffffff;
+}
+*/
+
+
+/*remote session asset information color
+.hdrdetail .hdrdata 
+{
+    color:              #FBB737;
+}
+*/
+
+
+/*Asset dashboard module header text color 
+.moduleHeader td{ 
+    color:              #FFFFFF;
+}
+*/
+
+
+/*Asset dashboard module body background color** Try not to use
+.module,
+.form
+{  
+    background:         #E6EAEC;
+}
+*/
+
+/*Asset dasboard module header link color 
+.moduleHeader a, .moduleHeader a:visited, .moduleHeader a:active {
+    color: #ffffff;
+}
+*/
+
+/*Page background color* Doesn't usually get touched
+#MainArea {
+	background-color: #f5f5f5;
+}
+*/
