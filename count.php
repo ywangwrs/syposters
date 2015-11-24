@@ -56,11 +56,11 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         $collection = $db->$dbname;
 
     // search weekly numbers
-    $num_overall = $collection->count();
+    $num_overall = $collection->count(array("NumPosters" => array('$ne' => '')));
 
-    $num_ruizhang = $collection->count(array("User" => "rui.zhang"));
-    $num_kathygillis = $collection->count(array("User" => "kathy.gillis"));
-    $num_yangwang = $collection->count(array("User" => "yang.wang"));
+    $num_ruizhang = $collection->count(array("User" => "rui.zhang", "NumPosters" => array('$ne' => '')));
+    $num_kathygillis = $collection->count(array("User" => "kathy.gillis", "NumPosters" => array('$ne' => '')));
+    $num_yangwang = $collection->count(array("User" => "yang.wang", "NumPosters" => array('$ne' => '')));
 
     echo "Overall: $num_overall<br>";
 

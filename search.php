@@ -87,13 +87,18 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         echo "</select>";
         echo "</td><td>";
 
+        echo "User:";
+        echo "</td><td >";
+        echo "<input style=\"width:100px\" name=\"User\" type=\"text\" /></br>";
+        echo "</td><td>";
+
         $gt_time = date("Y/m/d", strtotime("monday last week"));
         $lt_time = date("Y/m/d", strtotime("monday next week"));
         echo "Between:";
         echo "</td><td >";
-        echo "<input name=\"gt_time\" type=\"text\" value=$gt_time /></br>";
+        echo "<input style=\"width:100px\" name=\"gt_time\" type=\"text\" value=$gt_time /></br>";
         echo "</td><td>";
-        echo "<input name=\"lt_time\" type=\"text\" value=$lt_time /></br>";
+        echo "<input style=\"width:100px\" name=\"lt_time\" type=\"text\" value=$lt_time /></br>";
         echo "</td><td>";
 
         echo "<input type=\"submit\" value=\"Search\">";
@@ -109,12 +114,14 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         if (empty($_POST)) {
              $Type = "All";
              $City = "All";
+             $User = '';
              $dbname = "syposters";
         }
         else {
              $Type=$_POST["Type"];
              $City=$_POST["City"];
              $dbname=$_POST["dbname"];
+             $User=$_POST["User"];
              $gt_time=$_POST["gt_time"];
              $lt_time=$_POST["lt_time"];
         }
@@ -123,10 +130,18 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         // select a collection (analogous to a relational database's table)
         $collection = $db->$dbname;
 
-        if ( $Type == "All" && $City == "All" ) {
+        if ( $Type == "All" && $City == "All" && $User == '' ) {
             $search_array = array ( 
                 'Type' => array( '$ne' => null), 
                 'City' => array( '$ne' => null), 
+                'User' => array( '$ne' => null), 
+                'CreateTime' => array ( '$gt' => "$gt_time" ));
+        }
+        else if ( $Type == "All" && $City == "All" && $User != '' ) {
+            $search_array = array ( 
+                'Type' => array( '$ne' => null), 
+                'City' => array( '$ne' => null), 
+                'User' => "$User", 
                 'CreateTime' => array ( '$gt' => "$gt_time" ));
         }
         else if( $Type == "All" && $City != "All" ) {
