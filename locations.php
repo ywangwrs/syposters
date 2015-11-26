@@ -40,7 +40,13 @@ background-image: url('opacity.png');border: thin groove blue; padding: 1em; -mo
 }
 </style>
  
- 
+<script>
+function myFunction()
+{
+alert("I am an alert box!"); // this is the message in ""
+}
+</script>
+
 <?php
 // ================================================================
 
@@ -132,10 +138,8 @@ function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$
   <title>LocDataOttawa</title>
  </head>
  <body>
+
 <div class="opaque_box">
-
-
-
 
 <?php
 
@@ -147,7 +151,7 @@ echo "<h2>Current user is: $username</h2>";
 // ====== Show Form
  if (empty($_POST)) {
  	echo "<h1>Ottawa Locations Info Submit</h1>";
- 	echo "<h3>(*) The field we must fill in</h3>";
+ 	echo "<h3><font color=red>(*) The fields are required.</font></h3>";
  	echo "<form action=\"locations.php\" method=\"POST\"  enctype=\"multipart/form-data\">";
 ?>
 
@@ -155,14 +159,15 @@ echo "<h2>Current user is: $username</h2>";
 <table>
 <tr>
 <td>
-        Location Name (*):
+        Location Name <font color=red>(*)</font>:
         </td><td>
         <input style="width:500px" name="Name" type="text" placeholder="Location Name (mandatory info)"/></br>
         </td></tr><tr><td>
 
-        Location Type (*):
+        Location Type <font color=red>(*)</font>:
         </td><td>
         <select name="Type">
+                <option value=""></option>
                 <option value="Coffee_shop">Coffee Shop</option>
                 <option value="Restrauent">Restrauent</option>
                 <option value="HiTech">Hi-Tech Building</option>
@@ -189,7 +194,7 @@ echo "<h2>Current user is: $username</h2>";
         <input style="width:500px" name="Phone" type="tel" placeholder="613-xxx-xxxx (optional for posters)" /></br>
         </td></tr><tr><td>
 
-        Address (*):
+        Address <font color=red>(*)</font>:
         </td><td >
         <input style="width:500px" name="Address" type="text" placeholder="335 Terry Fox Dr"/></br>
         </td></tr><tr><td>
@@ -204,10 +209,10 @@ echo "<h2>Current user is: $username</h2>";
         <textarea name="MapLink" style="width:500px; height:50px" rows="3" cols="80" placeholder="https://www.google.ca/maps/place/xxxx (if you have it)"></textarea></br>
         </td></tr><tr><td>
 
-        City (*):
+        City <font color=red>(*)</font>:
         </td><td>
         <select name="City">
-                <option value="--">--</option>
+                <option value=""></option>
                 <option value="Ottawa">Ottawa</option>
                 <option value="Gatineau">Gatineau</option>
                 <option value="Kanata">Kanata</option>
@@ -284,13 +289,13 @@ echo "<h2>Current user is: $username</h2>";
 
 		echo "<HR /></td></tr><tr><td>";
 
-		echo "Delivered posters (*):";
+		echo "Delivered posters <font color=red>(*)</font>:";
         	echo "</td><td >";
         	echo "<input style=\"width:50px\" name=\"NumPosters\" type=\"number\" /></br>";
                 // close table cell
                 echo "</td></tr><tr><td>";
 
-		echo "Delivered flyers (*):";
+		echo "Delivered flyers:";
         	echo "</td><td >";
         	echo "<input style=\"width:50px\" name=\"NumFlyers\" type=\"number\" /></br>";
                 // close table cell
@@ -342,22 +347,22 @@ echo "<h2>Current user is: $username</h2>";
 	$Comments=$_POST["Comments"];
 
 
-	if ($Name == "DEBUG") {
-		echo "<b>Data Info:</b><br/>";
-		$l_type=$_FILES['myFile']['type'];
-		$l_name=$_FILES['myFile']['name'];
-		$l_size=$_FILES['myFile']['size'];
-		$l_error=$_FILES['myFile']['error'];
-		
-		echo "Content type: $l_type <br/>";
-		echo "Content type: $l_name <br/>";
-		echo "Content type: $l_size<br/>";
-		echo "Content type: $l_error <br/>";
-	}
-
-
 	// write the MongoDB
-	if ($Name != "DEBUG") {
+        // Required field names
+        $required = array('Name', 'Type', 'Address', 'City', 'NumPosters');
+        $empty_fields = '';
+
+        foreach($required as $field) {
+        	if ( empty($_POST[$field]) ) {
+			$empty_fields = $empty_fields . ' ' . $field;
+		}
+	}
+	if ($empty_fields != "") {
+                echo "<SCRIPT>alert('Sorry, the following field(s) are empty:\\n\\n     \"$empty_fields\" \\n\\nPlease go back to enter them!')</SCRIPT>";
+                exit();
+        }
+        else {
+                echo "Name = $Name";
 		write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$PaperAds,$NumPosters,$NumFlyers,$Comments);
 	}
   }
