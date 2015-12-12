@@ -175,10 +175,15 @@ echo "<h2>Current user is: $username</h2>";
                 <option value="Bank">Bank</option>
                 <option value="Library">Library</option>
                 <option value="Grocry_store">Grocery Store</option>
+                <option value="Drug_store">Drug Store</option>
                 <option value="Golf_club">Golf Club</option>
                 <option value="Car_dealer">Car Dealer</option>
                 <option value="Dentiest_office">Denitest Office</option>
                 <option value="Lawyer_office">Lawyer Office</option>
+                <option value="School">School/DayCare</option>
+                <option value="Clinic">Clinic</option>
+                <option value="Senior_center">Senior_Center</option>
+                <option value="Recreation">Gym/Recreation_Center</option>
                 <option value="Other">Other</option>
         </select>
 
