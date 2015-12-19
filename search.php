@@ -30,8 +30,12 @@
     <a href="/ottawa/statistics.php" target="_blank">Report</a>
 </div>
 
- <head>
+<head>
+</head>
+<body onload="finishTable();">
+<h1><div id="TitleWtihNumbers"></div></h1>
 <?php
+        $confirm_remove='no';
 
         set_error_handler('exceptions_error_handler');
 
@@ -44,8 +48,33 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
   }
 }
 
-        echo "<h1>MongoDB Search</h1>";
-        echo "<form action=\"search.php\" method=\"POST\"  enctype=\"multipart/form-data\">";
+function Test() {
+        confirm("Do you really want to delete it?");
+}
+
+function remove_record($create_time) {
+
+        // connect to dbottawa
+        $m=new MongoClient();
+        $db=$m->dbottawa;
+
+        // select a collection (analogous to a relational database's table)
+        $collection1 = $db->locdata;
+        $collection2 = $db->syposters;
+
+        // remove a record
+        $document = array( "CreateTime" => "$create_time" );
+        //echo "document = array( \"CreateTime\" => \"$create_time\" )";
+        
+
+        $collection1->remove($document);
+        $collection2->remove($document);
+
+        echo "<SCRIPT>alert('This record has been deleted! \\n\\n CreateTime = $create_time ')</SCRIPT>";
+
+}
+
+        echo "<form action=\"search.php?confirm_remove=no\" method=\"POST\"  enctype=\"multipart/form-data\">";
 
         echo "<table><tr><td>";
         echo "Database:";
@@ -92,7 +121,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         echo "<input style=\"width:100px\" name=\"User\" type=\"text\" /></br>";
         echo "</td><td>";
 
-        $gt_time = date("Y/m/d", strtotime("monday last week"));
+        $gt_time = date("Y/m/d", strtotime("monday this week"));
         $lt_time = date("Y/m/d", strtotime("monday next week"));
         echo "Between:";
         echo "</td><td >";
@@ -154,7 +183,11 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
             $search_array = array ( 'Type' => "$Type", 'City' => "$City" );
         }
 
-    echo "<table>";
+    echo "<table id=\"hikeTable\" border=\"3\" cellspacing=\"2\" cellpadding=\"1\">";
+    echo "<caption>";
+    echo "   Hikes";
+    echo "</caption>";
+    echo "<tbody>";
 
     // building table head with keys
     $cursor = $collection->find( $search_array );
@@ -179,6 +212,8 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         }
     }
 
+    echo "<th>Delete</th>";
+
     $cursor = $collection->find( $search_array );
     $cursor_count = $cursor->count();
     foreach ($cursor as $venue) {
@@ -191,16 +226,108 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
                    echo "<td>" . '' . "</td>";
                } 
         }
+        echo "<td><a href='search.php?confirm_remove=yes&create_time=$venue[$value]' onclick='return confirm(\"Do you really want to delete it?\");'><img src='/ottawa/styles/remove.png' width='17' height='17'></a></td>";
         echo "</tr>";
     }
 
+    echo "</tbody>";
     echo "</table>";
+
+    if ($_GET['confirm_remove'] == 'yes') { 
+        remove_record($_GET['create_time']); 
+    }
 ?>
 
-
 <HR />
-Version:<?php echo "0.1"; ?>  &nbsp; &nbsp;  <small>by Yang Wang</small><BR>
+Version:<?php echo "0.1"; ?>  &nbsp; &nbsp;  <small>by ywang</small><BR>
 </div>
- </body>
+
+<script type="text/javascript">
+var debugScript = false;
+
+function computeTableColumnTotal(tableId, colNumber)
+{
+  // find the table with id attribute tableId
+  // return the total of the numerical elements in column colNumber
+  // skip the top row (headers) and bottom row (where the total will go)
+		
+  var result = 0;
+		
+  try
+  {
+    var tableElem = window.document.getElementById(tableId); 		   
+    var tableBody = tableElem.getElementsByTagName("tbody").item(0);
+    var i;
+    var howManyRows = tableBody.rows.length;
+    for (i=1; i<(howManyRows); i++) // skip first and last row (hence i=1, and howManyRows-1)
+    {
+       var thisTrElem = tableBody.rows[i];
+       var thisTdElem = thisTrElem.cells[colNumber];			
+       var thisTextNode = thisTdElem.childNodes.item(0);
+       try
+       {
+          var thisTextNodeData = thisTextNode.data;
+       }
+       catch (ex)
+       {
+          thisTextNodeData = 0;
+       }
+       if (debugScript)
+       {
+          window.alert("text is " + thisTextNodeData);
+       } // end if
+
+       // try to convert text to numeric
+       var thisNumber = parseFloat(thisTextNodeData);
+       // if you didn't get back the value NaN (i.e. not a number), add into result
+       if (!isNaN(thisNumber))
+         result += thisNumber;
+	 } // end for
+		 
+  } // end try
+  catch (ex)
+  {
+     window.alert("Exception in function computeTableColumnTotal()\n" + ex);
+     result = 0;
+  }
+  finally
+  {
+     return result;
+  }
+	
+}
+		
+function finishTable()
+{
+   if (debugScript)
+     window.alert("Beginning of function finishTable");
+		
+   var tableElemName = "hikeTable";
+		
+   var totalPosters = computeTableColumnTotal("hikeTable",5);
+   var totalFlyers = computeTableColumnTotal("hikeTable",6);
+
+   var TitleWtihNumbers = "MongoDB Search (Total posters: " + totalPosters + ", flyers: " + totalFlyers + ")";
+
+   if (debugScript)
+   {
+      window.alert("totalPosters=" + totalPosters + "\n" +
+                   "totalFlyers=" + totalFlyers);
+   }
+
+   try 
+   {
+   var totalMilesPlannedElem = window.document.getElementById("TitleWtihNumbers");
+   totalMilesPlannedElem.innerHTML = TitleWtihNumbers;
+   }
+   catch (ex)
+   {
+     window.alert("Exception in function finishTable()\n" + ex);
+   }
+
+   return;
+}
+</script>
+</body>
 </html>
 

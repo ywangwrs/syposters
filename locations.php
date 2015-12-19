@@ -123,15 +123,6 @@ function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$
 	);
 	$collection2->insert($document2);
 
-	echo "<br>";
-	echo "<form action=\"search.php\" method=\"get\">";
-	echo "<input type=\"hidden\" name=\"dbname\" value=\"syposters\"/>";
-	echo "<input type=\"submit\" value=\"SY Postesrs\">";
-	echo "</form>";
-	echo "<form action=\"search.php\" method=\"get\">";
-	echo "<input type=\"hidden\" name=\"dbname\" value=\"locdata\"/>";
-	echo "<input type=\"submit\" value=\"Ottawa Locations\">";
-	echo "</form>";
 }
 
 ?>
@@ -371,12 +362,12 @@ echo "<h2>Current user is: $username</h2>";
 		write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$PaperAds,$NumPosters,$NumFlyers,$Comments);
 	}
   }
-?>
 
-<HR />
-<form action="search.php">
-     <input type="submit" value="Search Database">
-</form>
+echo "<HR />";
+echo "<form action=\"search.php?confirm_remove=no\" method=\"POST\"  enctype=\"multipart/form-data\">";
+echo "<input type=\"submit\" value=\"Search Database\">";
+echo "</form>";
+?>
 
 Version:<?php echo "$version"; ?>  &nbsp; &nbsp;  <small>by ywang</small><BR>
 </div>
