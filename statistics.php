@@ -15,7 +15,7 @@
 	 $columnChart = new FusionCharts("Column2D", "weekly_numbers" , 780, 400, "chart-1", "jsonurl", "weekly_numbers.json");
 	 // Render the chart
 	 $columnChart->render();
-	 $columnChart1= new FusionCharts("Column2D", "people_posted_numbers" , 580, 400, "chart-2", "jsonurl", "people_posted_numbers.json");
+	 $columnChart1= new FusionCharts("Column2D", "people_posted_numbers" , 780, 400, "chart-2", "jsonurl", "people_posted_numbers.json");
 	 // Render the chart
 	 $columnChart1->render();
 ?>

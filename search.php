@@ -28,6 +28,8 @@
 <div align="right" id="links">
     <a href="/ottawa/login.php" target="_blank">Login</a>
     <a href="/ottawa/statistics.php" target="_blank">Report</a>
+    <a href="http://luntan.ddns.net/phpbb/index.php" target="_blank">Forum</a>
+    <a href="https://www.youtube.com/watch?v=mUHHcXkAVo8" target="_blank">Trainning</a>
 </div>
 
 <head>
@@ -35,7 +37,6 @@
 <body onload="finishTable();">
 <h1><div id="TitleWtihNumbers"></div></h1>
 <?php
-        $confirm_remove='no';
 
         set_error_handler('exceptions_error_handler');
 
@@ -48,33 +49,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
   }
 }
 
-function Test() {
-        confirm("Do you really want to delete it?");
-}
-
-function remove_record($create_time) {
-
-        // connect to dbottawa
-        $m=new MongoClient();
-        $db=$m->dbottawa;
-
-        // select a collection (analogous to a relational database's table)
-        $collection1 = $db->locdata;
-        $collection2 = $db->syposters;
-
-        // remove a record
-        $document = array( "CreateTime" => "$create_time" );
-        //echo "document = array( \"CreateTime\" => \"$create_time\" )";
-        
-
-        $collection1->remove($document);
-        $collection2->remove($document);
-
-        echo "<SCRIPT>alert('This record has been deleted! \\n\\n CreateTime = $create_time ')</SCRIPT>";
-
-}
-
-        echo "<form action=\"search.php?confirm_remove=no\" method=\"POST\"  enctype=\"multipart/form-data\">";
+        echo "<form action=\"search.php\" method=\"POST\"  enctype=\"multipart/form-data\">";
 
         echo "<table><tr><td>";
         echo "Database:";
@@ -121,8 +96,10 @@ function remove_record($create_time) {
         echo "<input style=\"width:100px\" name=\"User\" type=\"text\" /></br>";
         echo "</td><td>";
 
-        $gt_time = date("Y/m/d", strtotime("monday this week"));
+        #$gt_time = date("Y/m/d", strtotime("monday last week"));
         $lt_time = date("Y/m/d", strtotime("monday next week"));
+        $gt_time = date("Y/m/d", strtotime("2016/02/29"));
+        #$lt_time = date("Y/m/d", strtotime("2015/12/14"));
         echo "Between:";
         echo "</td><td >";
         echo "<input style=\"width:100px\" name=\"gt_time\" type=\"text\" value=$gt_time /></br>";
@@ -164,14 +141,14 @@ function remove_record($create_time) {
                 'Type' => array( '$ne' => null), 
                 'City' => array( '$ne' => null), 
                 'User' => array( '$ne' => null), 
-                'CreateTime' => array ( '$gt' => "$gt_time" ));
+                'CreateTime' => array ( '$gt' => "$gt_time", '$lt' => "$lt_time" ));
         }
         else if ( $Type == "All" && $City == "All" && $User != '' ) {
             $search_array = array ( 
                 'Type' => array( '$ne' => null), 
                 'City' => array( '$ne' => null), 
                 'User' => "$User", 
-                'CreateTime' => array ( '$gt' => "$gt_time" ));
+                'CreateTime' => array ( '$gt' => "$gt_time", '$lt' => "$lt_time" ));
         }
         else if( $Type == "All" && $City != "All" ) {
             $search_array = array ( 'Type' => array( '$ne' => null), 'City' => "$City" );
@@ -212,36 +189,40 @@ function remove_record($create_time) {
         }
     }
 
-    echo "<th>Delete</th>";
+    echo "<th>Info</th>";
 
     $cursor = $collection->find( $search_array );
     $cursor_count = $cursor->count();
+    $username = '';
+    $timestamp = '';
     foreach ($cursor as $venue) {
         echo "<tr>";
         foreach (array_slice($keys,1) as $key => $value) {
                try {
                    echo "<td>" . $venue[$value] . "</td>";
+                   if ( $value == 'User' ) {
+                       $username = $venue[$value];
+                   }
+                   else if ( $value == 'CreateTime' ) {
+                       $timestamp = $venue[$value];
+                   }
                }
                catch(Exception $e) {
                    echo "<td>" . '' . "</td>";
                } 
         }
-        echo "<td><a href='search.php?confirm_remove=yes&create_time=$venue[$value]' onclick='return confirm(\"Do you really want to delete it?\");'><img src='/ottawa/styles/remove.png' width='17' height='17'></a></td>";
+
+        echo "<td><a href='edit.php?username=$username&timestamp=$timestamp' target='_blank'><img src='/ottawa/styles/edit.png' width='20' height='17'></a></td>";
         echo "</tr>";
     }
 
-    echo "</tbody>";
     echo "</table>";
-
-    if ($_GET['confirm_remove'] == 'yes') { 
-        remove_record($_GET['create_time']); 
-    }
 ?>
 
-<HR />
-Version:<?php echo "0.1"; ?>  &nbsp; &nbsp;  <small>by ywang</small><BR>
-</div>
 
+<HR />
+Version:<?php echo "0.1"; ?>  &nbsp; &nbsp;  <small>by Yang Wang</small><BR>
+</div>
 <script type="text/javascript">
 var debugScript = false;
 
@@ -328,6 +309,6 @@ function finishTable()
    return;
 }
 </script>
-</body>
+ </body>
 </html>
 

@@ -50,7 +50,7 @@ alert("I am an alert box!"); // this is the message in ""
 <?php
 // ================================================================
 
-function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$PaperAds,$NumPosters,$NumFlyers,$Comments) {
+function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$SYPresentation,$PaperAds,$NumPosters,$NumFlyers,$Comments) {
 
 	echo "Name=$Name<br>";
 	echo "Type=$Type<br>";
@@ -66,6 +66,7 @@ function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$
 	echo "EngPapers=$EngPapers<br>";
 	echo "ChnPapers=$ChnPapers<br>";
 	echo "SellTickets=$SellTickets<br>";
+	echo "SYPresentation=$SYPresentation<br>";
 	echo "PaperAds=$PaperAds<br>";
 	echo "NumPosters=$NumPosters<br>";
 	echo "NumFlyers=$NumFlyers<br>";
@@ -102,6 +103,7 @@ function write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$
 		"EngPapers" => "$EngPapers",
 		"ChnPapers" => "$ChnPapers",
 		"SellTickets" => "$SellTickets",
+		"SYPresentation" => "$SYPresentation",
 		"PaperAds" => "$PaperAds",
 		"User" => "$username",
                 "CreateTime" => "$time"
@@ -159,22 +161,27 @@ echo "<h2>Current user is: $username</h2>";
         </td><td>
         <select name="Type">
                 <option value=""></option>
-                <option value="Coffee_shop">Coffee Shop</option>
-                <option value="Restrauent">Restrauent</option>
-                <option value="HiTech">Hi-Tech Building</option>
-                <option value="Church">Church</option>
+                <option value="Auto_service">Auto Service</option>
                 <option value="Bank">Bank</option>
-                <option value="Library">Library</option>
-                <option value="Grocry_store">Grocery Store</option>
-                <option value="Drug_store">Drug Store</option>
-                <option value="Golf_club">Golf Club</option>
                 <option value="Car_dealer">Car Dealer</option>
-                <option value="Dentiest_office">Denitest Office</option>
-                <option value="Lawyer_office">Lawyer Office</option>
-                <option value="School">School/DayCare</option>
+                <option value="Church">Church</option>
                 <option value="Clinic">Clinic</option>
+                <option value="Clothing_store">Clothing Store</option>
+                <option value="Coffee_shop">Coffee Shop</option>
+                <option value="Dentiest_office">Denitest Office</option>
+                <option value="Drug_store">Drug Store</option>
+                <option value="Estate">Estate</option>
+                <option value="Golf_club">Golf Club</option>
+                <option value="Grocry_store">Grocery Store</option>
+                <option value="HiTech">Hi-Tech Building</option>
+                <option value="Hotel">Hotel</option>
+                <option value="Lawyer_office">Lawyer Office</option>
+                <option value="Library">Library</option>
+                <option value="School">School/DayCare</option>
                 <option value="Senior_center">Senior_Center</option>
+                <option value="Shopping_center">Shopping Center</option>
                 <option value="Recreation">Gym/Recreation_Center</option>
+                <option value="Restrauent">Restrauent</option>
                 <option value="Other">Other</option>
         </select>
 
@@ -216,7 +223,10 @@ echo "<h2>Current user is: $username</h2>";
                 <option value="Nepean">Nepean</option>
                 <option value="Gloucester">Gloucester</option>
                 <option value="Osgoode">Osgoode</option>
+                <option value="Greely">Greely</option>
+                <option value="Metcalfe">Metcalfe</option>
                 <option value="Barrhaven">Barrhaven</option>
+                <option value="Stittsville">Stittsville</option>
                 <option value="Other">Other</option>
         </select>
         </td></tr><tr><td>
@@ -252,7 +262,6 @@ echo "<h2>Current user is: $username</h2>";
                 echo "<option value=\"Yes\">Yes</option>";
                 echo "<option value=\"No\">No</option>";
                 echo "</select>";
-                // close table cell
                 echo "</td></tr><tr><td>";
 
                 echo "Able for Chinese Papers?";
@@ -262,7 +271,6 @@ echo "<h2>Current user is: $username</h2>";
                 echo "<option value=\"Yes\">Yes</option>";
                 echo "<option value=\"No\">No</option>";
                 echo "</select>";
-                // close table cell
                 echo "</td></tr><tr><td>";
 
                 echo "Possible for selling SY tickets?";
@@ -271,7 +279,16 @@ echo "<h2>Current user is: $username</h2>";
                 echo "<option value=\"--\">--</option>";
                 echo "<option value=\"Possible\">Possible</option>";
                 echo "<option value=\"Impossible\">Impossible</option>";
-                echo "</select>"; // close table cell
+                echo "</select>";
+                echo "</td></tr><tr><td>";
+
+                echo "Possible for Shen Yun presentation?";
+                echo "</td><td>";
+                echo "<select name=\"SYPresentation\">";
+                echo "<option value=\"--\">--</option>";
+                echo "<option value=\"Possible\">Possible</option>";
+                echo "<option value=\"Impossible\">Impossible</option>";
+                echo "</select>";
                 echo "</td></tr><tr><td>";
 
                 echo "Possible for Epochtimes Ads?";
@@ -280,7 +297,6 @@ echo "<h2>Current user is: $username</h2>";
                 echo "<option value=\"--\">--</option>";
                 echo "<option value=\"Possible\">Possible</option>";
                 echo "<option value=\"Impossible\">Impossible</option>";
-                // close table cell
                 echo "</td></tr><tr><td>";
 
 		echo "<HR /></td></tr><tr><td>";
@@ -337,6 +353,7 @@ echo "<h2>Current user is: $username</h2>";
 	$EngPapers=$_POST["EngPapers"];
 	$ChnPapers=$_POST["ChnPapers"];
 	$SellTickets=$_POST["SellTickets"];
+	$SYPresentation=$_POST["SYPresentation"];
 	$PaperAds=$_POST["PaperAds"];
 	$NumPosters=$_POST["NumPosters"];
 	$NumFlyers=$_POST["NumFlyers"];
@@ -359,7 +376,7 @@ echo "<h2>Current user is: $username</h2>";
         }
         else {
                 echo "Name = $Name";
-		write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$PaperAds,$NumPosters,$NumFlyers,$Comments);
+		write_mongodb($Name,$Type,$Contact,$Phone,$Address,$Postcode,$MapLink,$City,$Area,$Posters,$Flyers,$EngPapers,$ChnPapers,$SellTickets,$SYPresentation,$PaperAds,$NumPosters,$NumFlyers,$Comments);
 	}
   }
 
