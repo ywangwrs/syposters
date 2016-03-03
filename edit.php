@@ -56,7 +56,7 @@ $timestamp=$_GET['timestamp'];
 </div>
 
 <input type="submit" value="Search">
-<b><font color=red>  &lt;-- click here twice now!!</font></b>
+<b><font color=red>  &lt;-- Please click here twice first, it's a bug, will be fixed!!</font></b>
 <HR>
 
 <?php
@@ -64,6 +64,13 @@ $m=new MongoClient();
 $db=$m->dbottawa;
 $collection1 = $db->syposters;
 $collection2 = $db->locdata;
+
+if (empty ($filter[0])) {
+    $filter[0] = "User";
+    $filter_value[0] = $username;
+    $filter[1] = "CreateTime";
+    $filter_value[1] = $timestamp;
+}
 
 if (empty ($_POST["filter"][1])) {
     $filter=$_POST["filter"][0];
@@ -130,6 +137,7 @@ $id2 = $cursor2['_id'];
 $Address = $cursor2['Address'];
 $Postcode = $cursor2['Postcode'];
 $MapLink = $cursor2['MapLink'];
+$MapLink = substr($MapLink, 9, -26);
 
 ?>
 <table>
@@ -185,7 +193,7 @@ Number of Flyers:
 <tr><td>
 Comments:
 </td><td>
-<textarea name="Comments" style="width:500px; height:100px" rows="6" cols="80" value="<?php if (empty($Comments)) echo ""; else echo $Comments; ?>"></textarea></br>
+<textarea name="Comments" style="width:500px; height:100px" rows="6" cols="80"><?php if (empty($Comments)) echo ""; else echo $Comments; ?></textarea></br>
 </td></tr>
 
 <tr><td>
@@ -209,7 +217,7 @@ Postcode:
 <tr><td>
 Google Map Link:
 </td><td>
-<textarea name="MapLink" style="width:500px; height:50px" rows="3" cols="80" value="<?php if (empty($MapLink)) echo ""; else echo $MapLink; ?>"></textarea></br>
+<textarea name="MapLink" style="width:500px; height:100px" rows="6" cols="80"><?php if (empty($MapLink)) echo ""; else echo $MapLink; ?>"</textarea></br>
 </td></tr>
 
 </table>

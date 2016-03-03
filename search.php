@@ -161,9 +161,6 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         }
 
     echo "<table id=\"hikeTable\" border=\"3\" cellspacing=\"2\" cellpadding=\"1\">";
-    echo "<caption>";
-    echo "   Hikes";
-    echo "</caption>";
     echo "<tbody>";
 
     // building table head with keys
@@ -189,7 +186,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
         }
     }
 
-    echo "<th>Info</th>";
+    echo "<th>Edit</th>";
 
     $cursor = $collection->find( $search_array );
     $cursor_count = $cursor->count();
